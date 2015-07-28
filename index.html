@@ -3,8 +3,10 @@
 
 <meta charset="utf-8" />
 
-<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-<script src="monchi.js"></script>
+<!-- <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/zepto/1.1.6/zepto.min.js"></script>
+<script src="js/mustache.min.js"></script>
+<script src="js/monchi.js"></script>
 <link rel="stylesheet" type="text/css" href="style/foundation.min.css">
 
 <link href="style/headers.css"  rel="stylesheet" type="text/css">
@@ -95,20 +97,20 @@
     <a href="#content"><span class="icon icon-menu">hide sidebar</span></a>
     <a href="#drawer"><span class="icon icon-menu">show sidebar</span></a>
     -->
-    <h1>Monchi</h1>
+    <h1>{{title}}</h1>
   </header>
 
   <div role="main">
   <center>
 <p><p>
 <span id="points_container"><span id="points"></span></span>
-<span id="progress_container">Progreso: <span id="round">0</span>/<span id="total">0</span></span>
+<span id="progress_container"><span id="progress">{{progress}}</span>: <span id="round">0</span>/<span id="total">0</span></span>
 
 
 <span style="text-align:right;padding-right:20px;float:right;position:relative;">
     <label class="pack-switch">
       <input type="checkbox" id="dificil">
-      <span>Difícil</span>
+      <span id="difficult_label">{{difficult}}</span>
     </label>
  </span>
 

@@ -13,10 +13,25 @@ var ns_utils = new function() {
         return o;
     }
 
+    // mustache
+    this.spanish = { title:"Monchi", difficult: "Difícil", progress: "Progreso" };
+
+    this.translate = function(lang) {
+
+        $('h1').html(Mustache.render("{{title}}", this[lang]));
+        $('#difficult_label').html(Mustache.render("{{difficult}}", this[lang]));
+        $('#progress').html(Mustache.render("{{progress}}", this[lang]));
+
+    }
 }
 
 
+
 var ns_monchi = new function() {
+
+    var   fail = "error, volvemos a empezar\n\r";
+    const success ="Has ganado! :D\r\n Ganas 20 puntos.";
+
     this.step = 0;
     this.user_step = 0;
     this.canon = ns_utils.shuffle(["😇", "🐵", "😸", "😶"]);
@@ -44,10 +59,41 @@ var ns_monchi = new function() {
         //console.info(this.canon);
     };
 
-    this.show_symbol = function(n) {
 
-        if (this.canon[n] == undefined) {
-            alert("Has ganado! :D\r\n Ganas 20 puntos.");
+    /* points */
+
+    this.save_points = function(points){
+        localStorage.setItem('monchipuntos', parseInt( points, 10) + parseInt( this.get_points(), 10));
+        //localStorage.setItem('monchipuntos', 10);  //reset
+    };
+
+    this.get_points = function(){
+        var points = localStorage.getItem('monchipuntos');
+        return (points)? points: 0;
+    };
+
+    this.show_points = function(){
+        var points = this.get_points();
+        //console.log(points);
+        $('#points').html(points);
+    };
+
+    this.show_earned_points = function() {
+        var points = (this.step == 8)? 20 : (this.step * 10);
+        return "esta vez has ganado " + points + " puntos.";
+    };
+
+    this.earned_points = function() {
+        var points = (this.step == 8)? 20 : (this.step * 10);
+        return points;
+    };
+
+    /* end points */
+
+    this.show_symbol = function(n) {
+//console.log(this.canon[n]);
+        if (typeof this.canon[n] == 'undefined') {
+            alert(ns_utils.success);
             this.save_points(this.earned_points());
             ns_monchi.init_game();
             return;
@@ -84,42 +130,15 @@ var ns_monchi = new function() {
     this.show_error = function() {
         this.user_history = [];
         $('#screen').css('background-color', 'red');
-        alert("error, volvemos a empezar\n\r" + this.show_earned_points());
+        alert(fail + this.show_earned_points());
         this.save_points(this.earned_points());
         $('#screen').css('background-color', 'white');
         ns_monchi.init_game();
         return;
     }
 
-
-    /* puntos */
-    this.save_points = function(points){
-        localStorage.setItem('monchipuntos', parseInt( points, 10) + parseInt( this.get_points(), 10));
-        //localStorage.setItem('monchipuntos', 10);  //reset
-    };
-
-    this.get_points = function(){
-        var points = localStorage.getItem('monchipuntos');
-        return (points)? points: 0;
-    };
-
-    this.show_points = function(){
-        var points = this.get_points();
-        //console.log(points);
-        $('#points').html(points);
-    };
-
-    this.show_earned_points = function() {
-        var points = (this.step == 8)? 20 : (this.step * 10);
-        return "esta vez has ganado " + points + " puntos.";
-    };
-
-    this.earned_points = function() {
-        var points = (this.step == 8)? 20 : (this.step * 10);
-        return points;
-    };
-
     this.init_game = function () {
+        ns_utils.translate("spanish");
         this.show_points();
         this.init_canon();
         this.show_symbol(0);
@@ -128,6 +147,7 @@ var ns_monchi = new function() {
 
 
 $(document).ready(function() {
+
     // easy - difficult
     $( "#dificil" ).click(function() {
         ns_monchi.init_game();
@@ -173,6 +193,6 @@ $(document).ready(function() {
 
     /** THE RUN **/
     ns_monchi.init_game();
-    //console.info(canon);
+    console.info(ns_monchi.canon);
 
 });
