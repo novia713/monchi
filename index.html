@@ -1,13 +1,15 @@
 <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 <script src="monchi.js"></script>
 <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/foundation/5.5.0/css/foundation.min.css">
+
+<link href="style/headers.css"  rel="stylesheet" type="text/css">
+<link href="style/drawer.css"   rel="stylesheet" type="text/css">
+<link href="style/switches.css" rel="stylesheet" type="text/css">
+
 <style>
 
- body {
-    padding: 10px;
- }
  #screen {
-        font-size:86px;
+        font-size:100px;
         border-width:1px;
         border-style:solid;
         width:200px;
@@ -16,19 +18,86 @@
         vertical-align: middle;
         margin-top:auto;
         margin-bottom:auto;
-        line-height: 2.4em;
+        line-height: 2.1em;
         border-radius:50%
    }
 
    .btn{
         font-size:30px !important;
    }
+
+
+
+   #points_container {
+        left:20px;
+        padding:5px;
+        background-size: 42px 42px;
+        float:left;
+        position:relative;
+        border-radius: 50%;
+        background-color:#00ADAD;
+        line-height: 1.1rem;
+
+   }
+
+   #points {
+        color:white !important;
+   }
+
+   #points_container {
+        float:left;
+        position:relative;
+   }
 </style>
-<center>
+
+<!--
+<section data-type="sidebar">
+  <header>
+    <menu type="toolbar">
+      <a href="#content"><span class="icon icon-add">add</span></a>
+    </menu>
+    <h1>Monchi</h1>
+  </header>
+  <nav>
+    <ul>
+      <li><a href="#content">label</a></li>
+      <li><a href="#content">label</a></li>
+      <li><a href="#content">label</a></li>
+      <li><a href="#content">label</a></li>
+    </ul>
+    <h2>Subtitle</h2>
+    <ul>
+      <li><a href="#content">label</a></li>
+      <li><a href="#content">label</a></li>
+      <li><a href="#content">label larger label than the </a></li>
+      <li><a href="#content">label</a></li>
+    </ul>
+  </nav>
+</section>
+-->
+
+<section id="drawer" role="region" class="skin-comms">
+  <header>
+    <!--
+    <a href="#content"><span class="icon icon-menu">hide sidebar</span></a>
+    <a href="#drawer"><span class="icon icon-menu">show sidebar</span></a>
+    -->
+    <h1>Monchi</h1>
+  </header>
+
+  <div role="main">
+  <center>
 <p><p>
-<h3>Progreso: <span id="round">0</span>/8</h3>
-<p>
- </p>
+<span id="points_container"><span id="points"></span></span>
+<span id="progress_container">Progreso: <span id="round">0</span>/<span id="total">0</span></span>
+
+
+<span style="text-align:right;padding-right:20px;float:right;position:relative;">
+    <label class="pack-switch">
+      <input type="checkbox" id="dificil">
+      <span>Difícil</span>
+    </label>
+ </span>
 
 
 <div id="screen">
@@ -43,3 +112,6 @@
 
 <p><p></p>
 </center>
+  </div>
+
+</section>

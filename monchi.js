@@ -1,30 +1,44 @@
 'use strict'
+var ns_utils = new function() {
 
-function shuffle(o) {
-    for (var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
-    return o;
+    this.shuffle = function(o){
+        for (var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
+        return o;
+    }
+
 }
 
 
+var ns_monchi = new function() {
+    this.step = 0;
+    this.user_step = 0;
+    this.canon = ns_utils.shuffle(["☀", "☆", "☺", "✉"]);
+    this.canon_history = [];
+    this.user_history = [];
+    this.total = null;
 
-$(document).ready(function() {
+    this.init_canon = function() {
+        if ($( "#dificil" ).is(":checked")) {
+            this.total = 12;
+            this.canon = ns_utils.shuffle(this.canon.concat(ns_utils.shuffle(this.canon)).concat(ns_utils.shuffle(this.canon)));
+        }else{
+            this.total = 8;
+            this.canon = ns_utils.shuffle(this.canon.concat(ns_utils.shuffle(this.canon)));
+        }
+        $('#total').html(this.total);
+        //console.info(this.canon);
+    };
 
-    var step = 0;
-    var user_step = 0;
-    var canon = shuffle(["☀", "☆", "☺", "✉"]);
-    canon = shuffle(canon.concat(shuffle(canon)));
-    //console.info(canon);
-    var canon_history = [];
-    var user_history = [];
+    this.show_symbol = function(n) {
 
-    var show_symbol = function(n) {
-
-        if (canon[n] == undefined) {
-            alert(" you win :D");
+        if (this.canon[n] == undefined) {
+            alert("Has ganado! :D\r\n Ganas 20 puntos.");
+            this.save_points(this.earned_points());
+            location.reload();
             return;
         }
 
-        if (step > 0) {
+        if (this.step > 0) {
             $('#screen').css('background-color', 'green');
 
             setTimeout(function() {
@@ -32,17 +46,17 @@ $(document).ready(function() {
             }, 500);
         }
 
-        $('#screen').html(canon[n]).fadeIn('slow');
-        canon_history.push(canon[n]);
+        $('#screen').html(this.canon[n]).fadeIn('slow');
+        this.canon_history.push(this.canon[n]);
         //console.log(canon_history);
         //console.info(canon[n]);
     }
 
-    var get_actual_symbol = function() {
-        return canon[step];
+    this.get_actual_symbol = function() {
+        return this.canon[this.step];
     };
 
-    var get_contrary = function(orig) {
+    this.get_contrary = function(orig) {
         var table = {
             "☀": "☂",
             "☆": "★",
@@ -52,54 +66,92 @@ $(document).ready(function() {
         return table[orig];
     };
 
-    var show_error = function() {
-        user_history = [];
+    this.show_error = function() {
+        this.user_history = [];
         $('#screen').css('background-color', 'red');
-        alert("error, volvemos a empezar");
+        alert("error, volvemos a empezar\n\r" + this.show_earned_points());
+        this.save_points(this.earned_points());
         location.reload();
         return;
     }
 
-    //console.info(canon);
-    show_symbol(0);
+
+    /* puntos */
+    this.save_points = function(points){
+        localStorage.setItem('monchipuntos', parseInt( points, 10) + parseInt( this.get_points(), 10));
+        //localStorage.setItem('monchipuntos', 10);  //reset
+    };
+
+    this.get_points = function(){
+        var points = localStorage.getItem('monchipuntos');
+        return (points)? points: 0;
+    };
+
+    this.show_points = function(){
+        var points = this.get_points();
+        //console.log(points);
+        $('#points').html(points);
+    };
+
+    this.show_earned_points = function() {
+        var points = (this.step == 8)? 20 : (this.step * 10);
+        return "esta vez has ganado " + points + " puntos.";
+    };
+
+    this.earned_points = function() {
+        var points = (this.step == 8)? 20 : (this.step * 10);
+        return points;
+    };
+}
 
 
-
+$(document).ready(function() {
+    // easy - difficult
+    $( "#dificil" ).click(function() {
+        location.reload();
+    });
 
     /* onclick */
     $(".btn").click(function() {
-        user_step += 1;
+        ns_monchi.user_step += 1;
 
         var s = $(this).attr('val');
-        user_history.push(s);
+        ns_monchi.user_history.push(s);
 
         //check previous elems are ok
 
-        for (var i = 1; i <= user_step; i++) {
+        for (var i = 1; i <= ns_monchi.user_step; i++) {
             //console.info(i + ", " + user_step + "," + step);
 
-            if (i == (step + 1) || (step == 0)) {
+            if (i == (ns_monchi.step + 1) || (ns_monchi.step == 0)) {
 
-                if (get_contrary(get_actual_symbol()) == s) {
-                    step = step + 1;
-                    show_symbol(step);
-                    user_history = [];
-                    user_step = 0;
-                    $("#round").html(step);
+                if (ns_monchi.get_contrary(ns_monchi.get_actual_symbol()) == s) {
+                    ns_monchi.step = ns_monchi.step + 1;
+                    ns_monchi.show_symbol(ns_monchi.step);
+                    ns_monchi.user_history = [];
+                    ns_monchi.user_step = 0;
+                    $("#round").html(ns_monchi.step);
 
                 } else {
-                    show_error();
+                    ns_monchi.show_error();
                 }
 
             } else {
                 //console.log("user → " + user_history[i - 1]);
                 //console.log("canon → " + get_contrary(canon_history[i - 1]));
 
-                if (get_contrary(canon_history[i - 1]) != user_history[i - 1]) {
-                    show_error();
+                if (ns_monchi.get_contrary(ns_monchi.canon_history[i - 1]) != ns_monchi.user_history[i - 1]) {
+                    ns_monchi.show_error();
                 }
             }
 
         }
     });
+
+
+    /** THE RUN **/
+    //console.info(canon);
+    ns_monchi.show_points();
+    ns_monchi.init_canon();
+    ns_monchi.show_symbol(0);
 });
