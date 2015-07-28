@@ -1,3 +1,10 @@
+/*
+ *  TO-DO
+ *  - more functional style
+ *  - internacionalisation
+ */
+
+
 'use strict'
 var ns_utils = new function() {
 
@@ -12,12 +19,18 @@ var ns_utils = new function() {
 var ns_monchi = new function() {
     this.step = 0;
     this.user_step = 0;
-    this.canon = ns_utils.shuffle(["☀", "☆", "☺", "✉"]);
+    this.canon = ns_utils.shuffle(["😇", "🐵", "😸", "😶"]);
     this.canon_history = [];
     this.user_history = [];
     this.total = null;
 
     this.init_canon = function() {
+        this.step = 0;
+        this.user_step = 0;
+        this.canon_history = [];
+        this.user_history = [];
+        this.total = null;
+
         if ($( "#dificil" ).is(":checked")) {
             this.total = 12;
             this.canon = ns_utils.shuffle(this.canon.concat(ns_utils.shuffle(this.canon)).concat(ns_utils.shuffle(this.canon)));
@@ -25,6 +38,8 @@ var ns_monchi = new function() {
             this.total = 8;
             this.canon = ns_utils.shuffle(this.canon.concat(ns_utils.shuffle(this.canon)));
         }
+
+        $("#round").html(this.step);
         $('#total').html(this.total);
         //console.info(this.canon);
     };
@@ -34,7 +49,7 @@ var ns_monchi = new function() {
         if (this.canon[n] == undefined) {
             alert("Has ganado! :D\r\n Ganas 20 puntos.");
             this.save_points(this.earned_points());
-            location.reload();
+            ns_monchi.init_game();
             return;
         }
 
@@ -58,10 +73,10 @@ var ns_monchi = new function() {
 
     this.get_contrary = function(orig) {
         var table = {
-            "☀": "☂",
-            "☆": "★",
-            "☺": "☹",
-            "✉": "✂"
+            "😇": "😈",
+            "🐵": "🐮",
+            "😸": "😾",
+            "😶": "😷"
         };
         return table[orig];
     };
@@ -71,7 +86,8 @@ var ns_monchi = new function() {
         $('#screen').css('background-color', 'red');
         alert("error, volvemos a empezar\n\r" + this.show_earned_points());
         this.save_points(this.earned_points());
-        location.reload();
+        $('#screen').css('background-color', 'white');
+        ns_monchi.init_game();
         return;
     }
 
@@ -102,13 +118,19 @@ var ns_monchi = new function() {
         var points = (this.step == 8)? 20 : (this.step * 10);
         return points;
     };
+
+    this.init_game = function () {
+        this.show_points();
+        this.init_canon();
+        this.show_symbol(0);
+    };
 }
 
 
 $(document).ready(function() {
     // easy - difficult
     $( "#dificil" ).click(function() {
-        location.reload();
+        ns_monchi.init_game();
     });
 
     /* onclick */
@@ -150,8 +172,7 @@ $(document).ready(function() {
 
 
     /** THE RUN **/
+    ns_monchi.init_game();
     //console.info(canon);
-    ns_monchi.show_points();
-    ns_monchi.init_canon();
-    ns_monchi.show_symbol(0);
+
 });

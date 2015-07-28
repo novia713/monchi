@@ -1,12 +1,23 @@
+<html>
+<head>
+
+<meta charset="utf-8" />
+
 <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 <script src="monchi.js"></script>
-<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/foundation/5.5.0/css/foundation.min.css">
+<link rel="stylesheet" type="text/css" href="style/foundation.min.css">
 
 <link href="style/headers.css"  rel="stylesheet" type="text/css">
 <link href="style/drawer.css"   rel="stylesheet" type="text/css">
 <link href="style/switches.css" rel="stylesheet" type="text/css">
 
-<style>
+<style type="text/css">
+    @font-face {
+      font-family: "FiraSans-Regular";
+      src: "/style/FiraSans-Regular.ttf";
+    }
+
+ body { font-family: "FiraSans-Regular", serif }
 
  #screen {
         font-size:100px;
@@ -48,6 +59,7 @@
         float:left;
         position:relative;
    }
+
 </style>
 
 <!--
@@ -75,7 +87,8 @@
   </nav>
 </section>
 -->
-
+</head>
+<body>
 <section id="drawer" role="region" class="skin-comms">
   <header>
     <!--
@@ -104,14 +117,17 @@
 </div>
 
 <p><p><p><p>
-<button id="btn_1" val="☂" class="btn tiny secondary" >☂</button>
-<button id="btn_2" val="★" class="btn tiny secondary">★</button>
-<button id="btn_3" val="☹" class="btn tiny secondary">☹</button>
-<button id="btn_4" val="✂" class="btn tiny secondary">✂</button>
-
+<div id="botonera">
+<button id="btn_1" val="😈" class="btn tiny secondary">😈</button>
+<button id="btn_2" val="🐮" class="btn tiny secondary">🐮</button>
+<button id="btn_3" val="😾" class="btn tiny secondary">😾</button>
+<button id="btn_4" val="😷" class="btn tiny secondary">😷</button>
+</div>
 
 <p><p></p>
 </center>
   </div>
 
 </section>
+</body>
+</html>
