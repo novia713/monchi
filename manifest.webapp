@@ -1,0 +1,12 @@
+{
+  "name": "Monchi",
+  "description": "Un juego parecido al Simón pero un poco mas rebuscado",
+  "developer": {
+    "name": "leandro713"
+  },
+
+  "launch_path": "/index.html",
+  "default_locale": "es",
+  "installs_allowed_from": ["*"]
+
+}
