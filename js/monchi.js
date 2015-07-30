@@ -51,7 +51,9 @@ var ns_monchi = new function() {
 
     this.step = 0;
     this.user_step = 0;
+    //TODO: do this addon-able!!
     this.canon = ns_utils.shuffle(["😇", "🐵", "😸", "😶"]);
+
     this.canon_history = [];
     this.user_history = [];
     this.total = null;
@@ -70,7 +72,7 @@ var ns_monchi = new function() {
             this.total = 8;
             this.canon = ns_utils.shuffle(this.canon.concat(ns_utils.shuffle(this.canon)));
         }
-
+console.log(this.canon);
         $("#round").html(this.step);
         $('#total').html(this.total);
         //console.info(this.canon);
@@ -96,8 +98,20 @@ var ns_monchi = new function() {
     };
 
     this.show_earned_points = function() {
-        var points = (this.step == 8)? 20 : (this.step * 10);
-        return "esta vez has ganado " + points + " puntos.";
+        //TODO : refactor this
+            if (this.step == 12) {
+                var points = 30;
+            } else if (this.step == 8) {
+                var points = 20;
+            } else {
+                var points = (this.step * 10);
+            }
+
+        var points_str = {};
+        points_str["spanish"] = "esta vez has ganado " + points + " puntos.";
+        points_str["english"] = "you've earned " + points + " points this time.";
+
+        return points_str[ns_utils.get_trans_state()];
     };
 
     this.earned_points = function() {
@@ -155,6 +169,7 @@ var ns_monchi = new function() {
     }
 
     this.init_game = function () {
+
 //console.log(ns_utils.get_trans_state());
         if (ns_utils.get_trans_state() == null) {
             ns_utils.translate("spanish");
@@ -215,13 +230,10 @@ $(document).ready(function() {
 
     // see http://stackoverflow.com/questions/2223305/how-can-i-make-a-function-defined-in-jquery-ready-available-globally
     window.translate = function(lang) {
+
         ns_utils.translate(lang);
         ns_utils.set_trans_state(lang);
 
-        /*   TODO
-         * - save in localStorage
-         * - translate success & fail strings
-         */
     };
 
 
@@ -229,6 +241,6 @@ $(document).ready(function() {
    //console.log(ns_utils.get_trans_state());
 
     ns_monchi.init_game();
-    console.info(ns_monchi.canon);
+
 
 });
