@@ -23,15 +23,31 @@ var ns_utils = new function() {
         $('#difficult_label').html(Mustache.render("{{difficult}}", this[lang]));
         $('#progress').html(Mustache.render("{{progress}}", this[lang]));
 
-    }
+    };
+
+    this.set_trans_state = function(lang) {
+        localStorage.setItem('monchilang', lang);
+    };
+
+    this.get_trans_state = function() {
+        return localStorage.getItem('monchilang');
+    };
 }
 
 
 
 var ns_monchi = new function() {
 
-    var   fail = "error, volvemos a empezar\n\r";
-    const success ="Has ganado! :D\r\n Ganas 20 puntos.";
+    var fail = { "spanish": "error, volvemos a empezar\n\r", "english": "error, let's try again \n\r" };
+    var success = { "spanish": "Has ganado! :D\r\n Ganas 20 puntos.", "english": "You win! :D \n\r You earn 20 points." };
+
+    var get_success = function() {
+        return success[ns_utils.get_trans_state()];
+    };
+
+    var get_fail = function() {
+        return fail[ns_utils.get_trans_state()];
+    };
 
     this.step = 0;
     this.user_step = 0;
@@ -94,7 +110,7 @@ var ns_monchi = new function() {
     this.show_symbol = function(n) {
 //console.log(typeof this.canon[n]);
         if (typeof this.canon[n] == 'undefined') {
-            alert(ns_utils.success);
+            alert(get_success());
             this.save_points(this.earned_points());
             ns_monchi.init_game();
             return;
@@ -131,7 +147,7 @@ var ns_monchi = new function() {
     this.show_error = function() {
         this.user_history = [];
         $('#screen').css('background-color', 'red');
-        alert(fail + this.show_earned_points());
+        alert(get_fail() + this.show_earned_points());
         this.save_points(this.earned_points());
         $('#screen').css('background-color', '#DAFBFB');
         ns_monchi.init_game();
@@ -139,7 +155,13 @@ var ns_monchi = new function() {
     }
 
     this.init_game = function () {
-        ns_utils.translate("spanish");
+//console.log(ns_utils.get_trans_state());
+        if (ns_utils.get_trans_state() == null) {
+            ns_utils.translate("spanish");
+            ns_utils.set_trans_state("spanish");
+        }else{
+            ns_utils.translate(ns_utils.get_trans_state());
+        }
         this.show_points();
         this.init_canon();
         this.show_symbol(0);
@@ -194,6 +216,7 @@ $(document).ready(function() {
     // see http://stackoverflow.com/questions/2223305/how-can-i-make-a-function-defined-in-jquery-ready-available-globally
     window.translate = function(lang) {
         ns_utils.translate(lang);
+        ns_utils.set_trans_state(lang);
 
         /*   TODO
          * - save in localStorage
@@ -203,6 +226,8 @@ $(document).ready(function() {
 
 
     /** THE RUN **/
+   //console.log(ns_utils.get_trans_state());
+
     ns_monchi.init_game();
     console.info(ns_monchi.canon);
 
