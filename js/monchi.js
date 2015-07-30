@@ -1,4 +1,6 @@
 /*
+ *  leandro@leandro.org - 20150730
+ *
  *  TO-DO
  *  - more functional style
  *  - internacionalisation
@@ -72,7 +74,7 @@ var ns_monchi = new function() {
             this.total = 8;
             this.canon = ns_utils.shuffle(this.canon.concat(ns_utils.shuffle(this.canon)));
         }
-console.log(this.canon);
+
         $("#round").html(this.step);
         $('#total').html(this.total);
         //console.info(this.canon);
@@ -204,7 +206,7 @@ $(document).ready(function() {
             //console.info(i + ", " + user_step + "," + step);
 
             if (i == (ns_monchi.step + 1) || (ns_monchi.step == 0)) {
-
+                //user wins
                 if (ns_monchi.get_contrary(ns_monchi.get_actual_symbol()) == s) {
                     ns_monchi.step = ns_monchi.step + 1;
                     ns_monchi.show_symbol(ns_monchi.step);
@@ -238,7 +240,7 @@ $(document).ready(function() {
 
 
     /** THE RUN **/
-   //console.log(ns_utils.get_trans_state());
+    //console.log(ns_utils.get_trans_state());
 
     ns_monchi.init_game();
 
