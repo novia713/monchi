@@ -5,7 +5,7 @@
  */
 
 
-'use strict'
+//'use strict'
 var ns_utils = new function() {
 
     this.shuffle = function(o){
@@ -15,6 +15,7 @@ var ns_utils = new function() {
 
     // mustache
     this.spanish = { title:"Monchi", difficult: "Difícil", progress: "Progreso" };
+    this.english = { title:"Monchi", difficult: "Difficult", progress: "Progress" };
 
     this.translate = function(lang) {
 
@@ -189,6 +190,11 @@ $(document).ready(function() {
 
         }
     });
+
+    // see http://stackoverflow.com/questions/2223305/how-can-i-make-a-function-defined-in-jquery-ready-available-globally
+    window.translate = function(lang) {
+        ns_utils.translate(lang);
+    };
 
 
     /** THE RUN **/

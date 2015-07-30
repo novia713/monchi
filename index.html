@@ -1,14 +1,10 @@
 <html>
 <head>
 
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta charset="utf-8" />
 
-<!-- <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script> -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/zepto/1.1.6/zepto.min.js"></script>
-<script src="js/mustache.min.js"></script>
-<script src="js/monchi.js"></script>
 <link rel="stylesheet" type="text/css" href="style/foundation.min.css">
-
 <link href="style/headers.css"  rel="stylesheet" type="text/css">
 <link href="style/drawer.css"   rel="stylesheet" type="text/css">
 <link href="style/switches.css" rel="stylesheet" type="text/css">
@@ -23,7 +19,7 @@
 
  #screen {
         font-size:100px;
-        border-width:1px;
+        border-width:0px;
         border-style:solid;
         width:200px;
         height:200px;
@@ -62,41 +58,47 @@
         position:relative;
    }
 
+   section[role="region"] {
+  height: 100%;
+  font: 2.2rem/1em "MozTT", Sans-serif;
+}
+
+div[role="main"] {
+  background: #fff;
+  height: calc(100% - 5rem);
+  overflow: hidden;
+}
+
+div[role="main"] p {
+  margin: 2rem 2.5rem;
+}
+
 </style>
 
-<!--
+
 <section data-type="sidebar">
   <header>
     <menu type="toolbar">
-      <a href="#content"><span class="icon icon-add">add</span></a>
+      <a href="#"><span class="icon icon-menu">add</span></a>
     </menu>
     <h1>Monchi</h1>
   </header>
   <nav>
     <ul>
-      <li><a href="#content">label</a></li>
-      <li><a href="#content">label</a></li>
-      <li><a href="#content">label</a></li>
-      <li><a href="#content">label</a></li>
-    </ul>
-    <h2>Subtitle</h2>
-    <ul>
-      <li><a href="#content">label</a></li>
-      <li><a href="#content">label</a></li>
-      <li><a href="#content">label larger label than the </a></li>
-      <li><a href="#content">label</a></li>
+      <li><a href="#" onclick="javascript:translate('spanish');">español</a></li>
+      <li><a href="#" onclick="javascript:translate('english');">english</a></li>
     </ul>
   </nav>
 </section>
--->
+
 </head>
-<body>
-<section id="drawer" role="region" class="skin-comms">
+
+<section id="drawer" role="region" class="skin-comms" data-state="drawer">
   <header>
-    <!--
-    <a href="#content"><span class="icon icon-menu">hide sidebar</span></a>
+
+    <a href="#"><span class="icon icon-menu">hide sidebar</span></a>
     <a href="#drawer"><span class="icon icon-menu">show sidebar</span></a>
-    -->
+
     <h1>{{title}}</h1>
   </header>
 
@@ -131,5 +133,11 @@
   </div>
 
 </section>
-</body>
+
+<!-- <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/zepto/1.1.6/zepto.min.js"></script>
+<script src="js/mustache.min.js"></script>
+<script src="js/monchi.js"></script>
+
+
 </html>
