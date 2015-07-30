@@ -92,7 +92,7 @@ var ns_monchi = new function() {
     /* end points */
 
     this.show_symbol = function(n) {
-//console.log(this.canon[n]);
+//console.log(typeof this.canon[n]);
         if (typeof this.canon[n] == 'undefined') {
             alert(ns_utils.success);
             this.save_points(this.earned_points());
@@ -104,7 +104,7 @@ var ns_monchi = new function() {
             $('#screen').css('background-color', 'green');
 
             setTimeout(function() {
-                $('#screen').css('background-color', 'white');
+                $('#screen').css('background-color', '#DAFBFB');
             }, 500);
         }
 
@@ -133,7 +133,7 @@ var ns_monchi = new function() {
         $('#screen').css('background-color', 'red');
         alert(fail + this.show_earned_points());
         this.save_points(this.earned_points());
-        $('#screen').css('background-color', 'white');
+        $('#screen').css('background-color', '#DAFBFB');
         ns_monchi.init_game();
         return;
     }
@@ -194,6 +194,11 @@ $(document).ready(function() {
     // see http://stackoverflow.com/questions/2223305/how-can-i-make-a-function-defined-in-jquery-ready-available-globally
     window.translate = function(lang) {
         ns_utils.translate(lang);
+
+        /*   TODO
+         * - save in localStorage
+         * - translate success & fail strings
+         */
     };
 
 
