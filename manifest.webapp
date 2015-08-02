@@ -7,6 +7,8 @@
 
   "launch_path": "/index.html",
   "default_locale": "es",
-  "installs_allowed_from": ["*"]
+  "installs_allowed_from": ["*"],
+  "orientation": ["portrait" ],
+  "origin": "leandro.monchi.com"
 
 }

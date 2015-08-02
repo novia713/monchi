@@ -4,6 +4,7 @@
  *  TO-DO
  *  - more functional style
  *  - internacionalisation
+ *  - portrait only
  */
 
 
