@@ -10,5 +10,10 @@
   "installs_allowed_from": ["*"],
   "orientation": ["portrait" ],
   "origin": "app://monchi.leandro.org",
-  "type": "privileged"
+  "type": "privileged",
+
+  "icons":
+  {
+    "60":  "/icons/monchi.png"
+  }
 }
