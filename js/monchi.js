@@ -231,13 +231,21 @@ $(document).ready(function() {
         }
     });
 
-    // see http://stackoverflow.com/questions/2223305/how-can-i-make-a-function-defined-in-jquery-ready-available-globally
-    window.translate = function(lang) {
+    var translate = function(lang) {
 
         ns_utils.translate(lang);
         ns_utils.set_trans_state(lang);
 
     };
+
+    $( "#trans_spa" ).click(function() {
+      translate('spanish');
+    });
+
+    $( "#trans_eng" ).click(function() {
+      translate('english');
+    });
+
 
 
     /** THE RUN **/
