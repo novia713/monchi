@@ -8,7 +8,7 @@
  */
 
 
-//'use strict'
+'use strict'
 var ns_utils = new function() {
 
     this.shuffle = function(o){
@@ -242,6 +242,10 @@ $(document).ready(function() {
 
     /** THE RUN **/
     //console.log(ns_utils.get_trans_state());
+console.log("monchi app started");
+
+/* for the addon */
+window.ns_monchi = ns_monchi;
 
     ns_monchi.init_game();
 
