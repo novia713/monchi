@@ -9,7 +9,6 @@
   "default_locale": "es",
   "installs_allowed_from": ["*"],
   "orientation": ["portrait" ],
-  "type": "certified",
   "origin": "app://monchi.leandro.org"
 
 }
