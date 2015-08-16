@@ -3,7 +3,7 @@
  *
  *  TO-DO
  *  - more functional style
- *  - internacionalisation
+ *
  *  - portrait only
  */
 
@@ -226,6 +226,18 @@ $(document).ready(function() {
                 if (ns_monchi.get_contrary(ns_monchi.canon_history[i - 1]) != ns_monchi.user_history[i - 1]) {
                     ns_monchi.show_error();
                 }
+
+
+                /* difficulty addon */
+                if ($( "#dificil" ).is(":checked")) {
+                    console.log("from " + from + " to " + to);
+                    var from = Math.floor(Math.random()*3 +1);
+                    var to = Math.floor(Math.random()*4 +1);
+
+                    $("#btn_" + from).after($("#btn_"+ to));
+                    $("#btn_"+ to).before($("#btn_" + from));
+                }
+                /* end dificultad */
             }
 
         }
@@ -250,10 +262,9 @@ $(document).ready(function() {
 
     /** THE RUN **/
     //console.log(ns_utils.get_trans_state());
-console.log("monchi app started");
+    console.log("monchi app started");
 
-/* for the addon */
-window.ns_monchi = ns_monchi;
+
 
     ns_monchi.init_game();
 

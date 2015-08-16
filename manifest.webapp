@@ -14,6 +14,7 @@
 
   "icons":
   {
-    "60":  "/icons/monchi128.png"
+    "60":  "/icons/monchi.png",
+    "128":  "/icons/monchi128.png"
   }
 }

@@ -38,6 +38,11 @@ body {
     float: left;
     position: relative;
 }
+
+#difficulty_container {
+    display:none;
+}
+
 section[role="region"] {
     height: 100%;
 }
