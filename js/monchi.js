@@ -3,7 +3,6 @@
  *
  *  TO-DO
  *  - more functional style
- *  - portrait only
  */
 
 
@@ -120,6 +119,7 @@ var ns_monchi = new function() {
             } else {
                 var points = (this.step * STEP_POINTS);
             }
+
 
         var points_str = {};
         points_str["spanish"] = "esta vez has ganado " + points + " puntos.";

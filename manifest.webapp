@@ -4,11 +4,12 @@
   "developer": {
     "name": "leandro713"
   },
+  "version":"1.5",
 
   "launch_path": "/index.html",
   "default_locale": "es",
   "installs_allowed_from": ["*"],
-  "orientation": ["portrait" ],
+  "orientation": ["portrait-primary" ],
   "origin": "app://monchi.leandro.org",
   "type": "privileged",
 
