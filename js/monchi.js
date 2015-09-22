@@ -1,14 +1,20 @@
 /*
- *  leandro@leandro.org - 20150730
+ *  leandro@leandro.org - 20150922
  *
  *  TO-DO
  *  - more functional style
- *
  *  - portrait only
  */
 
 
-'use strict'
+'use strict';
+
+const DIRE_TOTAL = 12;
+const EASY_TOTAL = 8;
+const DIRE_POINTS = 35;
+const EASY_POINTS = 20;
+const STEP_POINTS = 8;
+
 var ns_utils = new function() {
 
     this.shuffle = function(o){
@@ -35,6 +41,11 @@ var ns_utils = new function() {
     this.get_trans_state = function() {
         return localStorage.getItem('monchilang');
     };
+
+    this.pseudo_switch = function(needle, haystack){
+        return haystack[needle];
+    };
+
 }
 
 
@@ -69,10 +80,10 @@ var ns_monchi = new function() {
         this.total = null;
 
         if ($( "#dificil" ).is(":checked")) {
-            this.total = 12;
+            this.total = DIRE_TOTAL;
             this.canon = ns_utils.shuffle(this.canon.concat(ns_utils.shuffle(this.canon)).concat(ns_utils.shuffle(this.canon)));
         }else{
-            this.total = 8;
+            this.total = EASY_TOTAL;
             this.canon = ns_utils.shuffle(this.canon.concat(ns_utils.shuffle(this.canon)));
         }
 
@@ -102,12 +113,12 @@ var ns_monchi = new function() {
 
     this.show_earned_points = function() {
         //TODO : refactor this
-            if (this.step == 12) {
-                var points = 30;
-            } else if (this.step == 8) {
-                var points = 20;
+            if (this.step == DIRE_TOTAL) {
+                var points = DIRE_POINTS;
+            } else if (this.step == EASY_TOTAL) {
+                var points = EASY_POINTS;
             } else {
-                var points = (this.step * 10);
+                var points = (this.step * STEP_POINTS);
             }
 
         var points_str = {};
@@ -118,7 +129,7 @@ var ns_monchi = new function() {
     };
 
     this.earned_points = function() {
-        var points = (this.step == 8)? 20 : (this.step * 10);
+        var points = (this.step == EASY_TOTAL)? 20 : (this.step * 10);
         return points;
     };
 
@@ -202,7 +213,6 @@ $(document).ready(function() {
         ns_monchi.user_history.push(s);
 
         //check previous elems are ok
-
         for (var i = 1; i <= ns_monchi.user_step; i++) {
             //console.info(i + ", " + user_step + "," + step);
 
@@ -230,7 +240,7 @@ $(document).ready(function() {
 
                 /* difficulty addon */
                 if ($( "#dificil" ).is(":checked")) {
-                    console.log("from " + from + " to " + to);
+                    //console.log("from " + from + " to " + to);
                     var from = Math.floor(Math.random()*3 +1);
                     var to = Math.floor(Math.random()*4 +1);
 
@@ -262,11 +272,9 @@ $(document).ready(function() {
 
     /** THE RUN **/
     //console.log(ns_utils.get_trans_state());
-    console.log("monchi app started");
-
-
 
     ns_monchi.init_game();
+    console.log("monchi app started");
 
 
 });
